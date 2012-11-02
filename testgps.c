@@ -65,33 +65,33 @@ tcsetattr(fd,TCSANOW,&newtio);
 // loop while waiting for input. normally we would do something useful here
 while (STOP == FALSE)
 {
-//
-// after receiving SIGIO, wait_flag = FALSE, input is available and can be read */
-if (wait_flag == FALSE)  //if input is available
-{
-res = read(fd,buf,255);
-if (res > 0)
-{
-	for (i=0; i < res; i++)  //for all chars in string
+	//
+	// after receiving SIGIO, wait_flag = FALSE, input is available and can be read */
+	if (wait_flag == FALSE)  //if input is available
 	{
-		//printf("%c", buf[i]);
-		if(gps_encode(buf[i]))
-			newdata = 1;
+		res = read(fd,buf,255);
+		if (res > 0)
+		{
+			for (i=0; i < res; i++)  //for all chars in string
+			{
+				//printf("%c", buf[i]);
+				if(gps_encode(buf[i]))
+					newdata = 1;
+			}
+
+  		if (newdata)
+  		{
+    			float flat, flon;
+    			unsigned long age;
+    			gps_f_get_position(&flat, &flon, &age);
+    			printf("LAT= %f LON= %f SAT=%d PREC=%lu \n", flat, flon, gps_satellites(), gps_hdop());
+    			newdata = 0;
+  		}
+
+
+		}
+	wait_flag = TRUE;      /* wait for new input */
 	}
-
-  if (newdata)
-  {
-    float flat, flon;
-    unsigned long age;
-    gps_f_get_position(&flat, &flon, &age);
-    printf("LAT= %f LON= %f SAT=%d PREC=%d \n", flat, flon, gps_satellites(), gps_hdop());
-    newdata = 0;
-  }
-
-
-}
-wait_flag = TRUE;      /* wait for new input */
-}
 }
 close(fd);
 }
