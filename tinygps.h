@@ -61,8 +61,6 @@ typedef unsigned char byte;
     GPS_INVALID_HDOP = 0xFFFFFFFF
   };
 
-  static const float GPS_INVALID_F_ANGLE, GPS_INVALID_F_ALTITUDE, GPS_INVALID_F_SPEED;
-
   // properties
   unsigned long _time, _new_time;
   unsigned long _date, _new_date;

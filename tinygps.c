@@ -24,18 +24,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <time.h>
 #include "tinygps.h"
 
-#define PI 3.14159265
-#define TWO_PI 2*PI
-
-#define sq(x) ((x)*(x))
-
-#define GPRMC_TERM   "GPRMC"
-#define GPGGA_TERM   "GPGGA"
-
-#define GPS_INVALID_F_ANGLE 1000.0
-#define GPS_INVALID_F_ALTITUDE 1000000.0
-#define GPS_INVALID_F_SPEED -1.0
-
 //
 // public methods
 //
