@@ -61,63 +61,14 @@ typedef unsigned char byte;
     GPS_INVALID_HDOP = 0xFFFFFFFF
   };
 
-  // properties
-  unsigned long _time, _new_time;
-  unsigned long _date, _new_date;
-  long _latitude, _new_latitude;
-  long _longitude, _new_longitude;
-  long _altitude, _new_altitude;
-  unsigned long  _speed, _new_speed;
-  unsigned long  _course, _new_course;
-  unsigned long  _hdop, _new_hdop;
-  unsigned short _numsats, _new_numsats;
-
-  unsigned long _last_time_fix, _new_time_fix;
-  unsigned long _last_position_fix, _new_position_fix;
-
-  // parsing state variables
-  byte _parity;
-  bool _is_checksum_term;
-  char _term[15];
-  byte _sentence_type;
-  byte _term_number = 0;
-  byte _term_offset = 0;
-  bool _is_gps_data_good;
-
-#ifndef GPS_NO_STATS
-  // statistics
-  unsigned long _encoded_characters;
-  unsigned short _good_sentences;
-  unsigned short _failed_checksum;
-  unsigned short _passed_checksum;
-#endif
-
-#if 0
-  TinyGPS();
-  bool encode(char c); // process one character received from GPS
-  TinyGPS &operator << (char c) {encode(c); return *this;}
-#endif
+  // process one character received from GPS
+  bool encode(char c);
 
   // lat/long in hundred thousandths of a degree and age of fix in milliseconds
   void gps_get_position(long *latitude, long *longitude, unsigned long *fix_age);
 
   // date as ddmmyy, time as hhmmsscc, and age in milliseconds
   void gps_get_datetime(unsigned long *date, unsigned long *time, unsigned long *age);
-
-  // signed altitude in centimeters (from GPGGA sentence)
-  inline long altitude() { return _altitude; }
-
-  // course in last full GPRMC sentence in 100th of a degree
-  inline unsigned long course() { return _course; }
-
-  // speed in last full GPRMC sentence in 100ths of a knot
-  inline unsigned long speed() { return _speed; }
-
-  // satellites used in last full GPGGA sentence
-  inline unsigned short gps_satellites() { return _numsats; }
-
-  // horizontal dilution of precision in 100ths
-  inline unsigned long gps_hdop() { return _hdop; }
 
   void gps_f_get_position(float *latitude, float *longitude, unsigned long *fix_age);
   void gps_crack_datetime(int *year, byte *month, byte *day, 
@@ -150,7 +101,7 @@ typedef unsigned char byte;
   unsigned long gps_parse_decimal();
   unsigned long gps_parse_degrees();
   bool gps_term_complete();
-  bool gpsisdigit(char c) { return c >= '0' && c <= '9'; }
+  bool gpsisdigit(char c);
   long gpsatol(const char *str);
   int gpsstrcmp(const char *str1, const char *str2);
 

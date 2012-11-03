@@ -24,9 +24,58 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <time.h>
 #include "tinygps.h"
 
+// properties
+unsigned long _time, _new_time;
+unsigned long _date, _new_date;
+long _latitude, _new_latitude;
+long _longitude, _new_longitude;
+long _altitude, _new_altitude;
+unsigned long  _speed, _new_speed;
+unsigned long  _course, _new_course;
+unsigned long  _hdop, _new_hdop;
+unsigned short _numsats, _new_numsats;
+
+unsigned long _last_time_fix, _new_time_fix;
+unsigned long _last_position_fix, _new_position_fix;
+
+// parsing state variables
+byte _parity;
+bool _is_checksum_term;
+char _term[15];
+byte _sentence_type;
+byte _term_number = 0;
+byte _term_offset = 0;
+bool _is_gps_data_good;
+
+#ifndef GPS_NO_STATS
+  // statistics
+  unsigned long _encoded_characters;
+  unsigned short _good_sentences;
+  unsigned short _failed_checksum;
+  unsigned short _passed_checksum;
+#endif
+
 //
 // public methods
 //
+
+// verify is character is a digit
+bool gpsisdigit(char c) { return c >= '0' && c <= '9'; }
+
+// signed altitude in centimeters (from GPGGA sentence)
+inline long altitude() { return _altitude; }
+
+// course in last full GPRMC sentence in 100th of a degree
+inline unsigned long course() { return _course; }
+
+// speed in last full GPRMC sentence in 100ths of a knot
+inline unsigned long speed() { return _speed; }
+
+// satellites used in last full GPGGA sentence
+inline unsigned short gps_satellites() { return _numsats; }
+
+// horizontal dilution of precision in 100ths
+inline unsigned long gps_hdop() { return _hdop; }
 
 
 clock_t uptime()

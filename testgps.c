@@ -5,11 +5,7 @@
 #include <stdlib.h>
 #include <sys/signal.h>
 #include <sys/types.h>
-
-extern char gps_encode(char c);
-extern void gps_f_get_position(float *latitude, float *longitude, unsigned long *fix_age);
-extern unsigned short satellites();
-extern unsigned long gps_hdop();
+#include "tinygps.h"
 
 #define BAUDRATE B4800
 #define FALSE 0
@@ -84,7 +80,8 @@ while (STOP == FALSE)
     			float flat, flon;
     			unsigned long age;
     			gps_f_get_position(&flat, &flon, &age);
-    			printf("LAT= %f LON= %f SAT=%d PREC=%lu \n", flat, flon, gps_satellites(), gps_hdop());
+    			printf("LAT= %f LON= %f SAT=%d PREC=%d \n",
+				flat, flon, gps_satellites(), gps_hdop());
     			newdata = 0;
   		}
 
