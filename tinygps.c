@@ -97,7 +97,7 @@ bool gps_encode(char c)
 {
   bool valid_sentence = false;
 
-#ifndef _GPS_NO_STATS
+#ifndef GPS_NO_STATS
   _encoded_characters++;
 #endif
   switch(c)
@@ -228,7 +228,7 @@ bool gps_term_complete()
     {
       if (_is_gps_data_good)
       {
-#ifndef _GPS_NO_STATS
+#ifndef GPS_NO_STATS
         ++_good_sentences;
 #endif
         _last_time_fix = _new_time_fix;
@@ -258,7 +258,7 @@ bool gps_term_complete()
       }
     }
 
-#ifndef _GPS_NO_STATS
+#ifndef GPS_NO_STATS
     else
       ++_failed_checksum;
 #endif

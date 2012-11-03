@@ -47,7 +47,7 @@ typedef unsigned char byte;
 #define GPS_KMPH_PER_KNOT 1.852
 #define GPS_MILES_PER_METER 0.00062137112
 #define GPS_KM_PER_METER 0.001
-// #define _GPS_NO_STATS
+// #define GPS_NO_STATS
 
   enum {
     GPS_INVALID_AGE = 0xFFFFFFFF,
@@ -86,7 +86,7 @@ typedef unsigned char byte;
   static float gps_course_to (float lat1, float long1, float lat2, float long2);
   static const char *gps_cardinal(float course);
 
-#ifndef _GPS_NO_STATS
+#ifndef GPS_NO_STATS
   void gps_stats(unsigned long *chars, unsigned short *good_sentences, unsigned short *failed_cs);
 #endif
 
